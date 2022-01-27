@@ -171,7 +171,7 @@ Public Class EXO_DOCUMENTOS
                 If oForm.Mode = BoFormMode.fm_ADD_MODE Or oForm.Mode = BoFormMode.fm_UPDATE_MODE Then
                     sCIF = CType(oForm.Items.Item("123").Specific, SAPbouiCOM.EditText).Value.ToString.Trim
                     If CType(oForm.Items.Item("120").Specific, SAPbouiCOM.ComboBox).Selected IsNot Nothing Then
-                        sIndicator = CType(oForm.Items.Item("120").Specific, SAPbouiCOM.ComboBox).Selected.Value.ToString
+                        sIndicator = CType(oForm.Items.Item("120").Specific, SAPbouiCOM.ComboBox).Selected.Description.ToString
                     Else
                         sIndicator = ""
                     End If
@@ -182,7 +182,7 @@ Public Class EXO_DOCUMENTOS
                         objGlobal.SBOApp.MessageBox(sMensaje)
                         Exit Function
                     Else
-                        If Left(sCIF, 2) = "ES" And sIndicator = "01" Then
+                        If Left(sCIF, 2) = "ES" And sIndicator = "NIE" Then
                             EventHandler_ItemPressed_Before = True
                         Else
                             If Left(sCIF.Trim, 2) = "ES" Then
