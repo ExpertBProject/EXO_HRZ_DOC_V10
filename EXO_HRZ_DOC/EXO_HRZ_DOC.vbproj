@@ -78,31 +78,31 @@
   <ItemGroup>
     <Reference Include="EXO_BasicDLL, Version=9.1.1.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\EXO_Kernel_10.0.1.4\x64\desarrollo\EXO_BasicDLL.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\EXO_Kernel_10.0.1.8\x64\EXO_BasicDLL.dll</HintPath>
     </Reference>
     <Reference Include="EXO_CleanCOM, Version=9.1.1.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\EXO_Kernel_10.0.1.4\x64\desarrollo\EXO_CleanCOM.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\EXO_Kernel_10.0.1.8\x64\EXO_CleanCOM.dll</HintPath>
     </Reference>
     <Reference Include="EXO_DIAPI, Version=9.1.1.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\EXO_Kernel_10.0.1.4\x64\desarrollo\EXO_DIAPI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\EXO_Kernel_10.0.1.8\x64\EXO_DIAPI.dll</HintPath>
     </Reference>
     <Reference Include="EXO_Generales, Version=9.1.1.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\EXO_Kernel_10.0.1.4\x64\desarrollo\EXO_Generales.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\EXO_Kernel_10.0.1.8\x64\EXO_Generales.dll</HintPath>
     </Reference>
     <Reference Include="EXO_Log, Version=9.1.1.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\EXO_Kernel_10.0.1.4\x64\desarrollo\EXO_Log.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\EXO_Kernel_10.0.1.8\x64\EXO_Log.dll</HintPath>
     </Reference>
     <Reference Include="EXO_UIAPI, Version=9.1.1.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\EXO_Kernel_10.0.1.4\x64\desarrollo\EXO_UIAPI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\EXO_Kernel_10.0.1.8\x64\EXO_UIAPI.dll</HintPath>
     </Reference>
-    <Reference Include="Sap.Data.Hana.v4.5, Version=1.0.120.0, Culture=neutral, PublicKeyToken=0326b8ea63db4bc4, processorArchitecture=MSIL">
+    <Reference Include="Sap.Data.Hana.v4.5, Version=2.7.26.0, Culture=neutral, PublicKeyToken=0326b8ea63db4bc4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Cliente\9.1.0.43\x64\Sap.Data.Hana.v4.5.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\EXO_Kernel_10.0.1.8\x64\Sap.Data.Hana.v4.5.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -197,19 +197,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PostBuildEvent>IF $(PlatformName) == x64 (
-rem copy $(TargetPath) "E:\Desarrollo\Ficheros\RodamientosHuryza\10.Dll_64\EXT\$(TargetFileName)"
-rem copy $(TargetPath) "E:\Desarrollo\Ficheros\RodamientosHuryza\10.Dll_64\DLLs\$(TargetFileName)"
-rem copy $(TargetPath) "C:\Program Files\SAP\SAP Business One\AddOns\EXO\EXO_Kernel_Web\X64Client\DLLs\$(TargetFileName)"
-rem copy $(TargetPath) "E:\Desarrollo\Cliente\9.1.1.0\x64\desarrollo\DLLs\$(TargetFileName)"
-
-rem copy "E:\Desarrollo\Git\Silvia\Rodamientos Huryza\EXO_HRZ_DOCUMENTOS\EXO_HRZ_DOCUMENTOS\bin\x64\Debug\EXO_HRZ_DOCUMENTOS.dll" "E:\Desarrollo\Usuarios\shernandez\9.1.0.43\x64\DLLs\$(TargetFileName)"
-rem copy "E:\Desarrollo\Git\Silvia\Rodamientos Huryza\EXO_HRZ_DOCUMENTOS\EXO_HRZ_DOCUMENTOS\bin\x64\Debug\EXO_HRZ_DOCUMENTOS.dll" "E:\Desarrollo\Ficheros\RodamientosHuryza\10.Dll_64\DLLs\$(TargetFileName)"
-
-)
-IF $(PlatformName) == x86 (
-copy $(TargetPath) "E:\Desarrollo\Ficheros\RodamientosHuryza\10.Dll\EXT\$(TargetFileName)"
-)</PostBuildEvent>
+    <PostBuildEvent>copy $(TargetPath) "E:\Desarrollo\Ficheros\10.Dll_64\EXT\$(TargetFileName)"
+copy $(TargetPath) "E:\Desarrollo\Usuarios\shernandez\EXO_Kernel_10.0.1.8\x64\DLLs\$(TargetFileName)"
+copy $(TargetPath) "E:\Desarrollo\EXO_Kernel_10.0.1.8\x64\DLLs\$(TargetFileName)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
