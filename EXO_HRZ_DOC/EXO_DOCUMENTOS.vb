@@ -6,6 +6,7 @@ Public Class EXO_DOCUMENTOS
         MyBase.New(oObjGlobal, actualizar, False, idAddOn)
         If actualizar Then
             CargarScripts()
+            ParametrizacionGeneral()
         End If
     End Sub
     Private Sub CargarScripts()
@@ -27,6 +28,18 @@ Public Class EXO_DOCUMENTOS
                 Throw ex
             End Try
         End If
+    End Sub
+    Private Sub ParametrizacionGeneral()
+
+        If Not objGlobal.refDi.OGEN.existeVariable("EXO_CLISERIEAB") Then
+            objGlobal.refDi.OGEN.fijarValorVariable("EXO_CLISERIEAB", "")
+        End If
+
+        If Not objGlobal.refDi.OGEN.existeVariable("EXO_CLISERIEA1") Then
+            objGlobal.refDi.OGEN.fijarValorVariable("EXO_CLISERIEA1", "")
+        End If
+
+
     End Sub
     Public Overrides Function filtros() As EventFilters
         Dim filtrosXML As Xml.XmlDocument = New Xml.XmlDocument
@@ -163,6 +176,7 @@ Public Class EXO_DOCUMENTOS
         Dim bSelLinea As Boolean = False
         Dim sMensaje As String = ""
         Dim sCIF As String = "" : Dim sIndicator As String = ""
+        Dim sSerie As String = ""
         EventHandler_ItemPressed_Before = False
 
         Try
@@ -191,6 +205,14 @@ Public Class EXO_DOCUMENTOS
                             End If
                         End If
                     End If
+                End If
+            End If
+
+            If pVal.ItemUID = "1" And pVal.FormTypeEx = "140" Then
+                If oForm.Mode = BoFormMode.fm_ADD_MODE Then
+                    sSerie = CType(oForm.Items.Item("88").Specific, SAPbouiCOM.ComboBox).Selected.Description
+                    EventHandler_ItemPressed_Before = Comprobar_Serie(objGlobal, sSerie, CType(oForm.Items.Item("4").Specific, SAPbouiCOM.EditText).Value.ToString.Trim)
+                    Exit Function
                 End If
             End If
 
@@ -235,6 +257,50 @@ Public Class EXO_DOCUMENTOS
             Throw ex
         Finally
             EXO_CleanCOM.CLiberaCOM.liberaCOM(CType(oRs, Object))
+        End Try
+    End Function
+
+    Public Shared Function Comprobar_Serie(ByRef oObjGlobal As EXO_UIAPI.EXO_UIAPI, ByVal sSerie As String, ByVal sCli As String) As Boolean
+        Comprobar_Serie = False
+
+        Dim sSQL As String = ""
+        Dim sCliVar As String = ""
+        Dim iRespuesta As Integer = 0
+
+        Try
+
+            'esta serie es para SOLO el cliente definido COMO AB
+            If Mid(sSerie, 1, 2) = "AB" Then
+                sCliVar = oObjGlobal.refDi.OGEN.valorVariable("EXO_CLISERIEAB")
+                If sCliVar <> "" Then
+                    If sCliVar <> sCli Then
+                        oObjGlobal.SBOApp.StatusBar.SetText("(EXO) - El Cliente " & sCli & " no puede utilizar la Serie AB porque está reservada al cliente " & sCliVar & ".", SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Error)
+                        oObjGlobal.SBOApp.MessageBox("El Cliente " & sCli & " no puede utilizar la Serie AB porque está reservada al cliente " & sCliVar & ".")
+                        Exit Function
+                    End If
+                End If
+            End If
+
+            If Mid(sSerie, 1, 2) = "A1" Then
+                sCliVar = oObjGlobal.refDi.OGEN.valorVariable("EXO_CLISERIEA1")
+                If sCliVar <> "" Then
+                    If sCliVar = sCli Then
+                        iRespuesta = oObjGlobal.SBOApp.MessageBox("Se va a crear el albarán al Cliente Contado " & sCli & vbCrLf & "¿Desea Continuar?", 2, "SI", "NO")
+                        If iRespuesta = 2 Then
+                            Exit Function
+                        End If
+                    End If
+                End If
+            End If
+
+
+            Comprobar_Serie = True
+        Catch exCOM As System.Runtime.InteropServices.COMException
+            Throw exCOM
+        Catch ex As Exception
+            Throw ex
+        Finally
+
         End Try
     End Function
 End Class
