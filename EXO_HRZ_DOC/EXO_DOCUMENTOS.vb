@@ -285,10 +285,13 @@ Public Class EXO_DOCUMENTOS
                 sCliVar = oObjGlobal.refDi.OGEN.valorVariable("EXO_CLISERIEA1")
                 If sCliVar <> "" Then
                     If sCliVar = sCli Then
-                        iRespuesta = oObjGlobal.SBOApp.MessageBox("Se va a crear el albarán al Cliente Contado " & sCli & vbCrLf & "¿Desea Continuar?", 2, "SI", "NO")
-                        If iRespuesta = 2 Then
-                            Exit Function
-                        End If
+                        oObjGlobal.SBOApp.StatusBar.SetText("(EXO) - El Cliente " & sCli & " no puede utilizar la Serie A1.", SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Error)
+                        oObjGlobal.SBOApp.MessageBox("El Cliente " & sCli & " no puede utilizar la Serie A1.")
+                        Exit Function
+                        'iRespuesta = oObjGlobal.SBOApp.MessageBox("Se va a crear el albarán al Cliente Contado " & sCli & vbCrLf & "¿Desea Continuar?", 2, "SI", "NO")
+                        'If iRespuesta = 2 Then
+                        '    Exit Function
+                        'End If
                     End If
                 End If
             End If
